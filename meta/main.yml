@@ -12,4 +12,8 @@ galaxy_info:
       versions:
       - all
   galaxy_tags:
-    - plesk, cloud, setup, hosting, sysadmin
+    - plesk
+    - cloud
+    - setup
+    - hosting
+    - sysadmin
