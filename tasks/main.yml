@@ -1,0 +1,34 @@
+- name: "Copy and fill xml-api-template for plesk."
+  template:
+    src: "templates/create-subdomain.xml.j2"
+    dest: "/tmp/create-subdomain.xml"
+    mode: 0777
+  delegate_to: localhost
+
+- name: "Create new subdomain {{ subdomain_name }}.{{ domain_name }} on server with plesk."
+  uri:
+    url: "https://{{ host_url }}:{{ host_port }}/enterprise/control/agent.php"
+    method: POST
+    user: "{{ plesk_admin_user }}"
+    password: "{{ plesk_admin_pw }}"
+    body: "{{ lookup('file','/tmp/create-subdomain.xml') }}"
+    return_content: yes
+    follow_redirects: all
+    force_basic_auth: yes
+    body_format: raw
+    validate_certs: no
+    headers:
+      Content-Type: "text/xml"
+      HTTP_AUTH_LOGIN: "{{ plesk_admin_user }}"
+      HTTP_AUTH_PASSWD: "{{ plesk_admin_pw }}"
+      HTTP_PRETTY_PRINT: TRUE
+    timeout: 120
+    register: subdomain_response
+    dest: "/tmp/log_create_subdomain_{{ subdomain_name }}.txt"
+    failed_when: '("error" in subdomain_response.content)'
+
+- name: "Delete xml-api-template."
+  file:
+    path: "/tmp/create-subdomain.xml"
+    state: absent
+  delegate_to: localhost

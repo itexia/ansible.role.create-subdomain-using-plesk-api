@@ -1,0 +1,8 @@
+host_url: <your-strato-server-id>.stratoserver.net
+host_port: 8443
+
+domain_name: "mydomain.com"
+subdomain_name: "my-new-instance"
+
+plesk_admin_user: "admin"
+plesk_admin_pw: "secure-admin-pw"

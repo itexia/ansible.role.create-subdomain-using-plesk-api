@@ -1,0 +1,6 @@
+enable_asp: "false"
+enable_ssi: "false"
+enable_php: "true"
+php_handler_id: "plesk-php56-fastcgi"
+enable_fastcgi: "false"
+enable_ssl: "false"
